@@ -2,10 +2,14 @@
 
 import { ProductCard } from "./productCard"
 import { ProductType } from "@/types/types"
-
 import './productGrid.css'
 
-export const ProductGrid = ({ productList, addToCart }: { productList: ProductType[] | null, addToCart: (target: ProductType) => void }) => {
+
+import productList from '../../data.json';
+
+export const ProductGrid = () => {
+
+    // Fetch products
     if (!productList) {
         return <>
             No Data
@@ -16,8 +20,8 @@ export const ProductGrid = ({ productList, addToCart }: { productList: ProductTy
     return <>
         <div className="product-grid">
             {productList.length > 0 ? (productList.map((data, index) => (
-                <ProductCard key={index} data={data} addToCart={addToCart} />
-            ))) : (<ProductCard data={null} addToCart={addToCart} />)}
+                <ProductCard key={index} data={data} />
+            ))) : (<ProductCard data={null} />)}
         </div>
     </>
 }

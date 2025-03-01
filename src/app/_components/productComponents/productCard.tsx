@@ -1,9 +1,11 @@
 "use client"
 import Image from "next/image"
-import './productCard.css'
 import { ProductType } from "@/types/types"
+import { useCartStore } from "@/app/_context/cart-store-provider"
+import './productCard.css'
 
-export const ProductCard = ({ data, addToCart }: { data: ProductType | null, addToCart: (target: ProductType) => void }) => {
+export const ProductCard = ({ data }: { data: ProductType | null }) => {
+    const { addToCart } = useCartStore(state => state)
     if (!data) {
         return <div className="">No Data :(</div>
     }

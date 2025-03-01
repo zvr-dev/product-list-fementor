@@ -3,9 +3,12 @@ import { CartItem } from './cartItem';
 import styles from './cartComponent.module.css'
 import Image from 'next/image';
 import { CartItemType } from '@/types/types';
+import { useCartStore } from '@/app/_context/cart-store-provider';
 
-export const CartComponent = ({ cartData }: { cartData: CartItemType[] | null }) => {
-    if (!cartData || cartData.length == 0) {
+export const CartComponent = () => {
+    const { cart } = useCartStore(state => state);
+
+    if (!cart || cart.length == 0) {
         const emptyIconSize = 128;
         return <>
             <div className={styles.cart}>
@@ -24,17 +27,17 @@ export const CartComponent = ({ cartData }: { cartData: CartItemType[] | null })
     const iconSize = 20;
 
     let totalPrice: number = 0;
-    cartData.map(cartItem => {
+    cart.map(cartItem => {
         totalPrice += cartItem.price * cartItem.amount
     })
 
 
     return <>
         <div className={styles.cart}>
-            <h2>Your Cart ({cartData.length})</h2>
+            <h2>Your Cart ({cart.length})</h2>
             <div className="cart-contents">
 
-                {cartData.map((item, index) => (
+                {cart.map((item, index) => (
                     <CartItem data={item} key={index} />
                 ))}
             </div>

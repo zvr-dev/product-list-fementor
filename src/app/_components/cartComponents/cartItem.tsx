@@ -2,12 +2,11 @@ import Image from 'next/image';
 import './cartItem.css';
 import CloseIcon from '@/assets/images/icon-remove-item.svg';
 import { CartItemType } from '@/types/types';
-
-
+import { useCartStore } from '@/app/_context/cart-store-provider';
 
 
 export const CartItem = ({ data }: { data: CartItemType | null }) => {
-
+    const { removeFromCart } = useCartStore(state => state)
     if (!data) {
         return <>Somethings wrong, no item data</>
     }
@@ -29,7 +28,7 @@ export const CartItem = ({ data }: { data: CartItemType | null }) => {
                     </div>
                 </div>
             </div>
-            <button className="close-btn clr-rose-300 hvr-pulse">
+            <button className="close-btn clr-rose-300 hvr-pulse" onClick={() => removeFromCart(data)}>
                 <CloseIcon />
             </button>
         </div>
