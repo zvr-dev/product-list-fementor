@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import './cartItem.css';
+import styles from './CartItem.module.css';
 import CloseIcon from '@/assets/images/icon-remove-item.svg';
 import { CartItemType } from '@/types/types';
 import { useCartStore } from '@/app/_context/cart-store-provider';
@@ -12,9 +12,9 @@ export const CartItem = ({ data }: { data: CartItemType | null }) => {
     }
     const btnSize = 12;
     return <>
-        <div className="cart-item">
-            <div className="left">
-                <div className="item-details ">
+        <div className={styles.cart_item}>
+            <div className={styles.left}>
+                <div className={styles.item_details}>
                     <span className='fw-bold'>{data.name}</span>
                     <div className='fw-bold clr-rose-500'>
                         <span className='clr-red'>
@@ -28,7 +28,7 @@ export const CartItem = ({ data }: { data: CartItemType | null }) => {
                     </div>
                 </div>
             </div>
-            <button className="close-btn clr-rose-300 hvr-pulse" onClick={() => removeFromCart(data)}>
+            <button className={`${styles.close_btn} clr-rose-300 hvr-pulse`} onClick={() => removeFromCart(data)}>
                 <CloseIcon />
             </button>
         </div>

@@ -1,11 +1,10 @@
 "use client"
 
-import { ProductCard } from "./productCard"
-import { ProductType } from "@/types/types"
-import './productGrid.css'
+import './ProductGrid.css'
 
 
 import productList from '../../data.json';
+import { ProductCard } from './ProductCard';
 
 export const ProductGrid = () => {
 
@@ -19,9 +18,9 @@ export const ProductGrid = () => {
 
     return <>
         <div className="product-grid">
-            {productList.length > 0 ? (productList.map((data, index) => (
-                <ProductCard key={index} data={data} />
-            ))) : (<ProductCard data={null} />)}
+            {productList.length > 0 ? (productList.map(productData => (
+                <ProductCard key={productData.name} product={productData} />
+            ))) : (<ProductCard product={null} />)}
         </div>
     </>
 }

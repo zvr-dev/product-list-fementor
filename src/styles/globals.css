@@ -48,7 +48,6 @@ html {
   font-family: "Red Hat Text", serif;
   font-weight: var(--fw-normal);
   color: var(--clr-rose-900);
-  height: 100%;
 }
 
 img,
@@ -59,12 +58,7 @@ iframe {
 }
 
 body {
-  height: 100%;
   background-color: var(--clr-rose-50);
-}
-
-main {
-  height: inherit;
 }
 
 h1 {
@@ -122,9 +116,7 @@ h4 {
   &:focus-within,
   &:focus,
   &:active {
-
     transform: scale(1.01);
-
   }
 
 }

@@ -1,44 +1,88 @@
 .product-card {
-    /* background-color: whitesmoke; */
     display: flex;
     flex-direction: column;
     width: 100%;
-    position: relative;
     gap: .25rem;
 }
 
-.product-card>img {
-    border-radius: var(--border-rad);
-    margin-bottom: 2.3rem;
+.product-top {
+    position: relative;
 }
 
-.product-card>button {
-    /* min-width: 24rem; */
-    text-wrap: nowrap;
-    padding-block: 0.65rem;
+.product-top>img {
+    border-radius: var(--border-rad);
+    margin-bottom: 2rem;
+}
 
-    border-radius: 2rem;
-    font-weight: var(--fw-bold);
-    outline: 1px solid var(--clr-rose-500);
-    margin-inline: auto;
-    align-items: center;
-    font-size: var(--fs-btn);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: .5rem;
+.img-in-cart {
+    outline: 2px solid var(--clr-red);
+}
+
+.product-top>.btn {
     position: absolute;
-    bottom: 5.5rem;
-    left: 15%;
-    right: 15%;
+    bottom: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+
+    min-width: 10.5rem;
+    padding-block: 0.7rem;
+    text-wrap: nowrap;
+    border-radius: 2rem;
+    display: flex;
+    gap: .5rem;
+    font-size: var(--fs-btn);
+
+}
+
+.btn-add-to-cart {
+    outline: 1px solid var(--clr-rose-500);
+    font-weight: var(--fw-bold);
+    justify-content: center;
+    align-items: center;
+
     transition: color 0.15s ease-in,
-        outline-color 0.15s ease-in;
+        outline-color 0.15s ease-in,
+    ;
 
     &:hover,
     &:focus {
 
         color: var(--clr-red);
         outline-color: var(--clr-red);
+    }
+}
+
+.in-cart {
+    background-color: var(--clr-red);
+    color: var(--clr-rose-50);
+    justify-content: space-between;
+    align-items: center;
+    padding-inline: 0.8rem;
+    outline: 1px solid var(--clr-red);
+}
+
+.in-cart>button {
+    width: 1rem;
+    height: 1rem;
+    outline: 1px solid currentColor;
+    border-radius: 50%;
+    background: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: scale(1.00);
+    /* margin-inline: 1rem; */
+    transition: color 0.15s ease-in,
+        background-color 0.15s ease-in;
+
+    &:hover,
+    &:focus-within {
+        color: var(--clr-red);
+        background-color: whitesmoke;
+    }
+
+    &>svg>path {
+        fill: currentColor;
     }
 }
 

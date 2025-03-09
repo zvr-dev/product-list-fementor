@@ -1,14 +1,25 @@
 "use client"
-import { CartItem } from './cartItem';
-import styles from './cartComponent.module.css'
+import { CartItem } from './CartItem';
+import styles from './CartComponent.module.css'
 import Image from 'next/image';
 import { CartItemType } from '@/types/types';
 import { useCartStore } from '@/app/_context/cart-store-provider';
+import { useMemo } from 'react';
 
 export const CartComponent = () => {
     const { cart } = useCartStore(state => state);
 
-    if (!cart || cart.length == 0) {
+    const iconSize = 20;
+    function toggleDialog() {
+        let dialogElement = document.querySelector('dialog');
+        if (dialogElement !== null) {
+            dialogElement.open = !dialogElement.open
+        }
+    }
+    let totalPrice: number = (!cart || cart.length === 0) ? 0 :
+        cart.reduce((sum, item) => (sum + item.price * item.amount), 0)
+
+    if (!cart || cart.length === 0) {
         const emptyIconSize = 128;
         return <>
             <div className={styles.cart}>
@@ -24,21 +35,14 @@ export const CartComponent = () => {
         </>
     }
 
-    const iconSize = 20;
-
-    let totalPrice: number = 0;
-    cart.map(cartItem => {
-        totalPrice += cartItem.price * cartItem.amount
-    })
 
 
     return <>
         <div className={styles.cart}>
             <h2>Your Cart ({cart.length})</h2>
-            <div className="cart-contents">
-
-                {cart.map((item, index) => (
-                    <CartItem data={item} key={index} />
+            <div>
+                {cart.map(item => (
+                    <CartItem data={item} key={item.name} />
                 ))}
             </div>
             <div className={styles.price}>
@@ -52,7 +56,7 @@ export const CartComponent = () => {
                 <p>This is a <strong>carbon-neutral</strong> delivery</p>
             </div>
 
-            <button className={`${styles.btn} hvr-pulse`}>Confirm Order</button>
+            <button className={`${styles.btn}`} onClick={toggleDialog}>Confirm Order</button>
         </div>
     </>
 }
