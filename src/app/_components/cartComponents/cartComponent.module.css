@@ -35,7 +35,6 @@
 }
 
 .carbon {
-    width: 100%;
     background-color: var(--clr-rose-50);
     padding: 1rem 2rem;
     display: flex;

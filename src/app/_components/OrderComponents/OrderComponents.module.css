@@ -1,0 +1,31 @@
+.modal {
+
+    left: 50%;
+    transform: translateX(-50%);
+    margin: auto 0;
+    padding: 1.5em;
+    border: 0;
+    border-radius: .7rem;
+    min-width: 30rem;
+}
+
+.modal::backdrop {
+    background: black;
+    opacity: .4;
+}
+
+.wrapper {
+    display: grid;
+}
+
+.wrapper>* {
+    margin-bottom: 1rem;
+}
+
+
+.btn {
+    padding: 1rem 2rem;
+    background-color: var(--clr-red);
+    border-radius: 2rem;
+    color: white;
+}

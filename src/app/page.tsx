@@ -5,13 +5,14 @@ import "./page.css";
 
 import { CartStoreProvider } from "./_context/cart-store-provider";
 import { ProductGrid } from "./_components/ProductComponents/ProductGrid";
+import { OrderComponent } from "./_components/OrderComponents/OrderComponent";
 
 export default function Home() {
 
 
   return <>
     <main className="page-wrapper">
-      <dialog >hello</dialog>
+      <OrderComponent />
       <div className="content-wrapper">
         <CartStoreProvider>
           <section className="lhs">

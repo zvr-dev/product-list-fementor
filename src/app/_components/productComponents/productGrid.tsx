@@ -9,7 +9,7 @@ import { ProductCard } from './ProductCard';
 export const ProductGrid = () => {
 
     // Fetch products
-    if (!productList) {
+    if (!productList || productList == null) {
         return <>
             No Data
         </>
@@ -18,9 +18,9 @@ export const ProductGrid = () => {
 
     return <>
         <div className="product-grid">
-            {productList.length > 0 ? (productList.map(productData => (
+            {(productList.map(productData => (
                 <ProductCard key={productData.name} product={productData} />
-            ))) : (<ProductCard product={null} />)}
+            )))}
         </div>
     </>
 }

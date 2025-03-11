@@ -7,17 +7,16 @@ import { useCartStore } from '@/app/_context/cart-store-provider';
 import { useMemo } from 'react';
 
 export const CartComponent = () => {
-    const { cart } = useCartStore(state => state);
+    const { cart, getTotalPrice } = useCartStore(state => state);
+    const totalPrice = useMemo(() => getTotalPrice(), [cart]);
 
     const iconSize = 20;
     function toggleDialog() {
         let dialogElement = document.querySelector('dialog');
         if (dialogElement !== null) {
-            dialogElement.open = !dialogElement.open
+            dialogElement.showModal()
         }
     }
-    let totalPrice: number = (!cart || cart.length === 0) ? 0 :
-        cart.reduce((sum, item) => (sum + item.price * item.amount), 0)
 
     if (!cart || cart.length === 0) {
         const emptyIconSize = 128;
@@ -51,7 +50,6 @@ export const CartComponent = () => {
             </div>
 
             <div className={styles.carbon}>
-                {/* <CarbonIcon /> */}
                 <Image src={"/images/icon-carbon-neutral.svg"} height={iconSize} width={iconSize} alt='' />
                 <p>This is a <strong>carbon-neutral</strong> delivery</p>
             </div>

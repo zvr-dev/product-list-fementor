@@ -1,3 +1,4 @@
+"use client"
 import Image from 'next/image';
 import styles from './CartItem.module.css';
 import CloseIcon from '@/assets/images/icon-remove-item.svg';
@@ -6,7 +7,7 @@ import { useCartStore } from '@/app/_context/cart-store-provider';
 
 
 export const CartItem = ({ data }: { data: CartItemType | null }) => {
-    const { removeFromCart } = useCartStore(state => state)
+    const removeFromCart = useCartStore(state => state.removeFromCart)
     if (!data) {
         return <>Somethings wrong, no item data</>
     }
