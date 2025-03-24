@@ -6,3 +6,9 @@
     justify-content: space-between;
     width: 100%;
 }
+
+@media only screen and (900px <=width <=1160px) {
+    .product-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}

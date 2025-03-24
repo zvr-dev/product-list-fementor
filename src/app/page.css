@@ -20,7 +20,8 @@
     position: sticky;
     top: 0;
     z-index: 1;
-    background-color: var(--clr-rose-50);
+    background: var(--clr-rose-50);
+    outline: 2px solid var(--clr-rose-50);
 }
 
 /* 15.625rem */
@@ -42,7 +43,7 @@
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 760px) {
     .content-wrapper {
         flex-direction: column;
         flex-wrap: nowrap;

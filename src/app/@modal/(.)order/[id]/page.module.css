@@ -1,0 +1,21 @@
+.modal {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    padding: 1.5em;
+    border: 0;
+    border-radius: .7rem;
+    min-width: 30rem;
+    z-index: 5;
+    background-color: var(--clr-rose-50);
+    display: block;
+}
+
+.modal_container::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-color: rgb(0, 0, 0, 0.4);
+    z-index: 2;
+}

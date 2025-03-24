@@ -10,13 +10,15 @@ const redHatText = Red_Hat_Text({});
 
 
 export default function RootLayout({
-  children,
+  children, modal
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode,
+  modal: React.ReactNode
 }>) {
   return (
     <html lang="en">
-      <body className={`${redHatText.className}`}>
+      <body className={redHatText.className}>
+        {modal}
         {children}
       </body>
     </html>

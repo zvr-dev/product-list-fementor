@@ -5,18 +5,23 @@ import Image from 'next/image';
 import { CartItemType } from '@/types/types';
 import { useCartStore } from '@/app/_context/cart-store-provider';
 import { useMemo } from 'react';
+import CarbonNeutralSvg from '@/assets/images/icon-carbon-neutral.svg'
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import useHasMounted from '@/hooks/useHasMounted';
 
 export const CartComponent = () => {
     const { cart, getTotalPrice } = useCartStore(state => state);
     const totalPrice = useMemo(() => getTotalPrice(), [cart]);
-
+    const router = useRouter();
+    const hasMounted = useHasMounted();
     const iconSize = 20;
-    function toggleDialog() {
-        let dialogElement = document.querySelector('dialog');
-        if (dialogElement !== null) {
-            dialogElement.showModal()
-        }
+
+    function handleConfirmOrder() {
+
     }
+
+    if (!hasMounted) return null;
 
     if (!cart || cart.length === 0) {
         const emptyIconSize = 128;
@@ -27,14 +32,13 @@ export const CartComponent = () => {
                     <Image src="/images/illustration-empty-cart.svg"
                         alt=''
                         width={emptyIconSize}
-                        height={emptyIconSize} />
+                        height={emptyIconSize}
+                        priority />
                     <p>Your added items will appear here</p>
                 </div>
             </div>
         </>
     }
-
-
 
     return <>
         <div className={styles.cart}>
@@ -50,11 +54,12 @@ export const CartComponent = () => {
             </div>
 
             <div className={styles.carbon}>
-                <Image src={"/images/icon-carbon-neutral.svg"} height={iconSize} width={iconSize} alt='' />
+                <CarbonNeutralSvg />
                 <p>This is a <strong>carbon-neutral</strong> delivery</p>
             </div>
-
-            <button className={`${styles.btn}`} onClick={toggleDialog}>Confirm Order</button>
+            <Link href={`/order/123`} scroll={false}>
+                <button className={styles.btn} onClick={handleConfirmOrder}>Confirm Order</button>
+            </Link>
         </div>
     </>
 }

@@ -12,6 +12,8 @@
 .product-top>img {
     border-radius: var(--border-rad);
     margin-bottom: 2rem;
+    aspect-ratio: 1;
+    object-fit: cover;
 }
 
 .img-in-cart {
@@ -91,4 +93,8 @@
 .product-card>p {
     color: var(--clr-red);
     font-weight: var(--fw-bold);
+}
+
+.hidden {
+    display: none !important;
 }

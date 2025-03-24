@@ -1,3 +1,4 @@
+"use client"
 import { CartItem } from "@/app/_components/CartComponents/CartItem";
 import { CartItemType, ProductType } from "@/types/types";
 import { createStore } from "zustand";
@@ -31,7 +32,7 @@ export const defaultCartInitState : CartState = {
 //  if the item was found then map over the cart and increment found items amt by 1
 //              if it wasnt found then spread old cart and add new item
 const _addToCart = (state: CartState, newItem:ProductType) => {
-    const {itemExists, updatedCart} = _incrementDecrementHelper(state, newItem.name, "increase")
+    const {itemExists, updatedCart} = _incrementDecrementHelper(state, newItem.name, increaseOrDecrease.INCREASE)
     return {
         cart : itemExists ? updatedCart : [...updatedCart, {
             name: newItem.name,
@@ -54,14 +55,17 @@ const _isInCart = (state:CartState, itemToFind: ProductType["name"]) : boolean =
     return Boolean(state.cart.find(cartItem => itemToFind === cartItem.name))
 }
 
-type increaseOrDecrease = 'increase' | 'decrease'
+enum increaseOrDecrease {
+    INCREASE , 
+    DECREASE
+}
 
 const _incrementDecrementHelper = (state: CartState, itemName:ProductType["name"], type: increaseOrDecrease) => {
     let itemExists= false;
     let updatedCart = state.cart.map((cartItem) => {
         if (cartItem.name === itemName) {
             itemExists = true;
-            const newAmount = type === 'increase' ? cartItem.amount+1 : cartItem.amount-1
+            const newAmount = type === increaseOrDecrease.INCREASE ? cartItem.amount+1 : cartItem.amount-1
             // skip item if amount is 0
             return newAmount > 0 ? {...cartItem, amount: (newAmount)} : null;
         } 
@@ -71,7 +75,7 @@ const _incrementDecrementHelper = (state: CartState, itemName:ProductType["name"
     return {itemExists, updatedCart}
 }
 const _increaseOrDecreaseItem = (state: CartState, item:ProductType["name"], type:increaseOrDecrease) => {
-    const {updatedCart} = _incrementDecrementHelper(state,item, type);
+    const {updatedCart} = _incrementDecrementHelper(state, item, type);
     return{ cart: updatedCart}
 }
 
@@ -96,8 +100,8 @@ export const createCartStore = (
                 addToCart: newItem => set(state => _addToCart(state, newItem)),
                 removeFromCart: (itemToRmv) => set(state => _removeFromCart(state, itemToRmv)),
                 isInCart: itemToFind => _isInCart(get(), itemToFind),
-                incrementItem: item => set(state => _increaseOrDecreaseItem(state, item, 'increase')),
-                decrementItem: item => set(state => _increaseOrDecreaseItem(state, item, 'decrease')),
+                incrementItem: item => set(state => _increaseOrDecreaseItem(state, item, increaseOrDecrease.INCREASE)),
+                decrementItem: item => set(state => _increaseOrDecreaseItem(state, item, increaseOrDecrease.DECREASE)),
             }) ,
             {
                 name: 'cart-storage', // name of the item in the storage (must be unique)

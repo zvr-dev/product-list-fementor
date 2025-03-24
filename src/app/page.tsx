@@ -12,7 +12,6 @@ export default function Home() {
 
   return <>
     <main className="page-wrapper">
-      <OrderComponent />
       <div className="content-wrapper">
         <CartStoreProvider>
           <section className="lhs">

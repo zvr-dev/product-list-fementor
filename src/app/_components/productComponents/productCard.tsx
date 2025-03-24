@@ -4,23 +4,23 @@ import { CartItemType, ProductType } from "@/types/types"
 import { useCartStore } from "@/app/_context/cart-store-provider"
 import DecrementSvg from '@/assets/images/icon-decrement-quantity.svg'
 import IncrementSvg from '@/assets/images/icon-increment-quantity.svg'
+import AddToCartSvg from '@/assets/images/icon-add-to-cart.svg'
 import './ProductCard.css'
-import { useEffect, useState } from "react"
+import useHasMounted from "@/hooks/useHasMounted"
 
 export const ProductCard = ({ product }: { product: ProductType }) => {
-    const [isClientLoading, setIsClientLoading] = useState(true);
-    // To prevent hydration issues
-    useEffect(() => {
-        setIsClientLoading(false)
-    }, [])
-
+    const hasMounted = useHasMounted();
     const cartItem = useCartStore(state => state.getItemFromCart(product.name))
-    const inCartFlag = Boolean(cartItem);
+    const isInCart = Boolean(cartItem);
 
+    if (!hasMounted) return null;
     return (
         <div className="product-card">
             <div className="product-top">
-                <img src={product.image.desktop} className={!isClientLoading && inCartFlag ? 'img-in-cart' : ''} alt="" />
+
+                <img src={product.image.desktop} className={isInCart ?
+                    'img-in-cart' : ''} alt=""
+                    suppressHydrationWarning />
                 <AddToCartButton product={product} cartItem={cartItem} />
             </div>
             <small>{product.category}</small>
@@ -31,28 +31,27 @@ export const ProductCard = ({ product }: { product: ProductType }) => {
 };
 
 const AddToCartButton = ({ product, cartItem }: { product: ProductType, cartItem: CartItemType | undefined }) => {
-    const [isClientLoading, setIsClientLoading] = useState(true);
-
-    useEffect(() => {
-        setIsClientLoading(false)
-    }, [])
-
     const { addToCart, incrementItem, decrementItem } = useCartStore(state => state);
     const iconSize = 22;
 
-    if (!cartItem || isClientLoading) {
-        return <button onClick={() => addToCart(product)}
-            className="hvr-pulse btn btn-add-to-cart">
-            <Image src={'/images/icon-add-to-cart.svg'} width={iconSize} height={iconSize} alt="" />
+    return <>
+        <button onClick={() => addToCart(product)}
+            className={`hvr-pulse btn btn-add-to-cart ${cartItem ? "hidden" : ""}`} >
+            {/* <Image src={"/images/icon-add-to-cart.svg"} width={iconSize} height={iconSize} alt="" /> */}
+            <AddToCartSvg />
             Add to Cart
         </button>
-    }
 
-    return <div className="btn in-cart">
-        <button onClick={() => decrementItem(product.name)}><DecrementSvg /></button>
-        <span>{cartItem ? cartItem.amount : 0}</span>
-        <button onClick={() => incrementItem(product.name)}><IncrementSvg /></button>
-    </div>
+        <div className={`btn in-cart ${cartItem ? "" : "hidden"}`}>
+            <button onClick={() => decrementItem(product.name)}>
+                <DecrementSvg />
+            </button>
+            <span>{cartItem?.amount || 0}</span>
+            <button onClick={() => incrementItem(product.name)}>
+                <IncrementSvg />
+            </button>
+        </div>
+    </>
 
 
 
